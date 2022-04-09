@@ -1,6 +1,10 @@
 package com.any.twofourteenalgorithms.stringList;
 
+import com.any.twofourteenalgorithms.IntegerList.IntegerList;
+import com.any.twofourteenalgorithms.IntegerList.IntegerListImpl;
+
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,6 +33,7 @@ public class Main {
         System.out.println(Arrays.toString(stringList.toArray()));
         stringList.clear();
         System.out.println(Arrays.toString(stringList.toArray()));
+        System.out.println("--------------------");
 
     }
 
