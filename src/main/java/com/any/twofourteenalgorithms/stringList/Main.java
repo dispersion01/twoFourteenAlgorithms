@@ -1,10 +1,6 @@
 package com.any.twofourteenalgorithms.stringList;
 
-import com.any.twofourteenalgorithms.IntegerList.IntegerList;
-import com.any.twofourteenalgorithms.IntegerList.IntegerListImpl;
-
 import java.util.Arrays;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {

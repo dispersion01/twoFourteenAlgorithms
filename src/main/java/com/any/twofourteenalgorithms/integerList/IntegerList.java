@@ -1,8 +1,4 @@
-package com.any.twofourteenalgorithms.IntegerList;
-
-import com.any.twofourteenalgorithms.stringList.StringList;
-
-import java.util.List;
+package com.any.twofourteenalgorithms.integerList;
 
 public interface IntegerList {
 
@@ -83,11 +79,11 @@ public interface IntegerList {
 
         Integer[] randomNumberOfArray();
 
-        Integer[] bubbleSort();
+       Integer[]  bubbleSort(Integer[] array);
 
-        Integer[] sortSelection();
+        Integer[] sortSelection(Integer[] arrayIntegerList);
 
-        Integer[] sortInsertion();
+        Integer[] sortInsertion(Integer[] arrayIntegerList);
 
         Integer compareSort();
         boolean binarySearch(Integer item);

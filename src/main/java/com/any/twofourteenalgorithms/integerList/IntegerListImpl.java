@@ -1,16 +1,18 @@
-package com.any.twofourteenalgorithms.IntegerList;
+package com.any.twofourteenalgorithms.integerList;
 
 
 import java.util.Objects;
 import java.util.Random;
 
 public class IntegerListImpl implements IntegerList {
-    private Integer[] arrayIntegerList;
+    private Integer[] arrayIntegerList = new Integer[8];
     private int size = 0;
+
+
 
     @Override
     public Integer add(Integer item) {
-        if (size >= arrayIntegerList.length) {
+        if (size <= arrayIntegerList.length) {
             Integer[] extend = new Integer[arrayIntegerList.length * 2];
             System.arraycopy(arrayIntegerList, 0, extend, 0, arrayIntegerList.length);
             arrayIntegerList = extend;
@@ -31,6 +33,7 @@ public class IntegerListImpl implements IntegerList {
         }
         return item;
     }
+
 
     @Override
     public Integer set(int index, Integer item) {
@@ -68,7 +71,7 @@ public class IntegerListImpl implements IntegerList {
 
     @Override
     public boolean contains(Integer item) {
-        sortInsertion();
+        sortInsertion(arrayIntegerList);
         boolean exist = true;
         for (int i = 0; i < size; i++) {
             if (!arrayIntegerList[i].equals(item)) {
@@ -177,8 +180,8 @@ public class IntegerListImpl implements IntegerList {
         arrayIntegerList[indexB] = tmp;
     }
 
-    @Override
-    public Integer[]  bubbleSort() {
+//    @Override
+   public Integer[] bubbleSort(Integer[] arrayIntegerList) {
         for (int i = 0; i < arrayIntegerList.length - 1; i++) {
             for (int j = 0; j < arrayIntegerList.length - 1 - i; j++) {
                 if (arrayIntegerList[j] > arrayIntegerList[j + 1]) {
@@ -190,7 +193,7 @@ public class IntegerListImpl implements IntegerList {
     }
 
     @Override
-    public Integer[] sortSelection() {
+    public Integer[] sortSelection(Integer[] arrayIntegerList) {
         for (int i = 0; i < arrayIntegerList.length - 1; i++) {
             int minElementIndex = i;
             for (int j = i + 1; j < arrayIntegerList.length; j++) {
@@ -203,7 +206,7 @@ public class IntegerListImpl implements IntegerList {
     }
 
     @Override
-    public Integer[] sortInsertion() {
+    public Integer[] sortInsertion(Integer[] arrayIntegerList) {
         for (int i = 1; i < arrayIntegerList.length; i++) {
             int temp = arrayIntegerList[i];
             int j = i;
@@ -223,6 +226,7 @@ public class IntegerListImpl implements IntegerList {
         return a;
     }
 
+
     public boolean binarySearch(Integer item) {
         int min = 0;
         int max = arrayIntegerList.length - 1;
@@ -230,7 +234,7 @@ public class IntegerListImpl implements IntegerList {
         while (min <= max) {
             int mid = (min + max) / 2;
 
-            if (item == arrayIntegerList[mid]) {
+            if (item.equals(arrayIntegerList[mid])) {
                 return true;
             }
 
