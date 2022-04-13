@@ -1,107 +1,76 @@
 package com.any.twofourteenalgorithms.integerList;
 
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
 public class IntegerListImpl implements IntegerList {
-    private Integer[] arrayIntegerList = new Integer[8];
-    private int size = 0;
+    private Integer[] arrayIntegerList;
+    private int size;
+    private static final int DEFAULT_CAPACITY = 8;
 
+    public IntegerListImpl() {
+        this(DEFAULT_CAPACITY);
+    }
 
+    public IntegerListImpl(Integer capacity) {
+        this.arrayIntegerList = new Integer[capacity];
+    }
+
+    private void checkNotNull(Integer item) {
+        if (item == null) {
+            throw new RuntimeException();
+        }
+    }
 
     @Override
     public Integer add(Integer item) {
-        if (size <= arrayIntegerList.length) {
-            Integer[] extend = new Integer[arrayIntegerList.length * 2];
-            System.arraycopy(arrayIntegerList, 0, extend, 0, arrayIntegerList.length);
-            arrayIntegerList = extend;
-        }
-        arrayIntegerList[size] = item;
-        size++;
+        checkNotNull(item);
+        arrayIntegerList[size++] = item;
         return item;
+    }
+
+
+    public boolean binarySearch(Integer item) {
+        int min = 0;
+        int max = arrayIntegerList.length - 1;
+
+        while (min <= max) {
+            int mid = (min + max) / 2;
+
+            if (item.equals(arrayIntegerList[mid])) {
+                return true;
+            }
+
+            if (item < arrayIntegerList[mid]) {
+                max = mid - 1;
+            } else {
+                min = mid + 1;
+            }
+        }
+        return false;
+
+    }
+
+    private void checkIndex(int index) {
+        if (index < 0 || index > size) {
+            throw new RuntimeException();
+        }
     }
 
     @Override
     public Integer add(int index, Integer item) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException();
-        }
+        checkNotNull(item);
+        checkIndex(index);
         add(item);
-        for (int i = size - 1; i > index; i--) {
-            arrayIntegerList[i] = arrayIntegerList[i - 1];
+        for (int i = size - 1; i >= index; i--) { //сдвиг массива через цикл
+            arrayIntegerList[i + 1] = arrayIntegerList[i];
         }
-        return item;
-    }
-
-
-    @Override
-    public Integer set(int index, Integer item) {
-        int old = get(index);
+//        System.arraycopy(arrayIntegerList,0,arrayIntegerList,index+1, size-index);
         arrayIntegerList[index] = item;
-        return old;
-    }
-
-    @Override
-    public Integer remove(Integer item) {
-        int x = -1;
-        for (int i = 0; i < size; i++) {
-            if (item == arrayIntegerList[i]) {
-                x = i;
-                break;
-            }
-        }
-        if (x != -1) {
-            remove(x);
-        } else {
-            throw new RuntimeException();
-        }
+        size++;
         return item;
-    }
-
-    @Override
-    public Integer removeIndex(int index) {
-        Integer element = get(index);
-        for (int i = index; i < size - 1; i++) {
-            arrayIntegerList[i] = arrayIntegerList[i + 1];
-        }
-        size--;
-        return element;
-    }
-
-    @Override
-    public boolean contains(Integer item) {
-        sortInsertion(arrayIntegerList);
-        boolean exist = true;
-        for (int i = 0; i < size; i++) {
-            if (!arrayIntegerList[i].equals(item)) {
-                exist = false;
-                break;
-            }
-        }
-        return binarySearch(item);
-    }
-
-    @Override
-    public int indexOf(Integer item) {
-        for (int i = 0; i < size; i++) {
-            if (Objects.equals(item, arrayIntegerList[i])) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    @Override
-    public int lastIndexOf(Integer item) {
-        int result = -1;
-        for (int i = size - 1; i >= 0; i--) {
-            if (arrayIntegerList[i].equals(item)) {
-                result = i;
-                break;
-            }
-        }
-        return result;
     }
 
     @Override
@@ -113,45 +82,56 @@ public class IntegerListImpl implements IntegerList {
     }
 
     @Override
-    public boolean equals(IntegerList otherList) {
-        if (otherList == null) {
-            return false;
-        }
-        boolean result = true;
-        if (this.size != otherList.size()) {
-            result = false;
-        } else {
-            for (int i = 0; i < this.size; i++) {
-                if (!this.get(i).equals(otherList.get(i))) {
-                    result = false;
-                    break;
-                }
+    public Integer set(int index, Integer item) {
+        int old = get(index);
+        arrayIntegerList[index] = item;
+        return item;
+    }
+
+
+    @Override
+    public int indexOf(Integer item) {
+        for (int i = 0; i < size; i++) {
+            if (Objects.equals(item, arrayIntegerList[i])) {
+                return i;
             }
         }
-        return result;
+        return -1;
+    }
+
+    private void removeItem(int index) {
+        if (size - 1 > index) {
+            System.arraycopy(arrayIntegerList, index + 1, arrayIntegerList, index, size - index - 1);
+        }
+        arrayIntegerList[size--] = null;
     }
 
     @Override
-    public int size() {
-        return size;
+    public Integer remove(int index) {
+        checkIndex(index);
+        Integer item = get(index);
+        removeItem(index);
+        return item;
     }
 
     @Override
-    public boolean isEmpty() {
-        boolean result = true;
-        for (Integer s : arrayIntegerList) {
-            if (s != null) {
-                result = false;
-                break;
+    public Integer remove(Integer item) {
+        checkNotNull(item);
+        checkIndex(item);
+        int index = indexOf(item);
+        removeItem(index);
+        return item;
+    }
+
+    @Override
+    public int lastIndexOf(Integer item) {
+        checkNotNull(item);
+        for (int i = size - 1; i >= 0; i--) {
+            if (item.equals(arrayIntegerList[i])) {
+                return i;
             }
         }
-        return result;
-    }
-
-    @Override
-    public void clear() {
-        arrayIntegerList = new Integer[10];
-        size = 0;
+        return -1;
     }
 
     @Override
@@ -164,28 +144,44 @@ public class IntegerListImpl implements IntegerList {
     }
 
     @Override
-    public Integer[] randomNumberOfArray() { //генератор случайного массива
-
-       Random random = new Random();
-        for (int i = 0; i < arrayIntegerList.length; i++) {
-            arrayIntegerList[i] = random.nextInt(100_000) + 100_000;
+    public boolean equals(IntegerList otherList) {
+        if (otherList == null) {
+            return false;
         }
-        return arrayIntegerList;
-
+        return Arrays.equals(arrayIntegerList, otherList.toArray());
     }
-
+    @Override
+    public int size() {
+        return size;
+    }
+    @Override
+    public boolean isEmpty() {
+        boolean result = true;
+        for (Integer s : arrayIntegerList) {
+            if (s != null) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+    @Override
+    public void clear() {
+        arrayIntegerList = new Integer[10];
+        size = 0;
+    }
     private static void swapElements(Integer[] arrayIntegerList, int indexA, int indexB) {
         int tmp = arrayIntegerList[indexA];
         arrayIntegerList[indexA] = arrayIntegerList[indexB];
         arrayIntegerList[indexB] = tmp;
     }
 
-//    @Override
-   public Integer[] bubbleSort(Integer[] arrayIntegerList) {
+    //    @Override
+    public Integer[] bubbleSort(Integer[] arrayIntegerList) {
         for (int i = 0; i < arrayIntegerList.length - 1; i++) {
             for (int j = 0; j < arrayIntegerList.length - 1 - i; j++) {
                 if (arrayIntegerList[j] > arrayIntegerList[j + 1]) {
-                     swapElements(arrayIntegerList, j, j + 1);
+                    swapElements(arrayIntegerList, j, j + 1);
                 }
             }
         }
@@ -218,34 +214,8 @@ public class IntegerListImpl implements IntegerList {
         }
         return arrayIntegerList;
     }
-
-    @Override
-    public Integer compareSort() {
-        long start = System.currentTimeMillis();
-        int a = Math.toIntExact(System.currentTimeMillis() - start);
-        return a;
+    public boolean contains(Integer item) {
+        bubbleSort(arrayIntegerList);
+        return binarySearch(item);
     }
-
-
-    public boolean binarySearch(Integer item) {
-        int min = 0;
-        int max = arrayIntegerList.length - 1;
-
-        while (min <= max) {
-            int mid = (min + max) / 2;
-
-            if (item.equals(arrayIntegerList[mid])) {
-                return true;
-            }
-
-            if (item < arrayIntegerList[mid]) {
-                max = mid - 1;
-            } else {
-                min = mid + 1;
-            }
-        }
-        return false;
-
-    }
-
 }

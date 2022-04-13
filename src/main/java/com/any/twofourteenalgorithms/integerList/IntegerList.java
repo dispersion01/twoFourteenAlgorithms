@@ -2,91 +2,58 @@ package com.any.twofourteenalgorithms.integerList;
 
 public interface IntegerList {
 
-        // Добавление элемента.
-        // Вернуть добавленный элемент
-        // в качестве результата выполнения.
+        //Добавление элемента
         Integer add(Integer item);
 
-        // Добавление элемента
-        // на определенную позицию списка.
-        // Если выходит за пределы фактического
-        // количества элементов или массива,
-        // выбросить исключение.
-        // Вернуть добавленный элемент
-        // в качестве результата выполнения.
+        //    бинарный поиск
+        boolean binarySearch(Integer item);
+
+        // Добавление элемента по индексу
         Integer add(int index, Integer item);
-        // Установить элемент
-        // на определенную позицию,
-        // затерев существующий.
-        // Выбросить исключение,
-        // если индекс больше
-        // фактического количества элементов
-        // или выходит за пределы массива.
-        Integer set(int index, Integer item);
-
-        // Удаление элемента.
-        // Вернуть удаленный элемент
-        // или исключение, если подобный
-        // элемент отсутствует в списке.
-        Integer remove(Integer item);
-
-        // Удаление элемента по индексу.
-        // Вернуть удаленный элемент
-        // или исключение, если подобный
-        // элемент отсутствует в списке.
-        Integer removeIndex(int index);
-
-        // Проверка на существование элемента.
-        // Вернуть true/false;
-        boolean contains(Integer item);
-
-        // Поиск элемента.
-        // Вернуть индекс элемента
-        // или -1 в случае отсутствия.
-        int indexOf(Integer item);
-
-        // Поиск элемента с конца.
-        // Вернуть индекс элемента
-        // или -1 в случае отсутствия.
-        int lastIndexOf(Integer item);
 
         // Получить элемент по индексу.
-        // Вернуть элемент или исключение,
-        // если выходит за рамки фактического
-        // количества элементов.
         Integer get(int index);
 
-        // Сравнить текущий список с другим.
-        // Вернуть true/false или исключение,
-        // если передан null.
+        // Установить элемент на определенную позицию, затерев существующий.
+        Integer set(int index, Integer item);
+
+        // Поиск элемента. Вернуть индекс элемента
+        int indexOf(Integer item);
+
+
+        // Удаление элемента, по индексу.
+        Integer remove(int index);
+
+        //удаление элемента
+        Integer remove(Integer item);
+
+        // Поиск элемента с конца, возврщает индекс элемента или -1 в случае отсутствия.
+        int lastIndexOf(Integer item);
+
+        // Создать новый массив
+        Integer[] toArray();
+
+        // Сравнить текущий список с другим, true/false
         boolean equals(IntegerList otherList);
 
-        // Вернуть фактическое количество элементов.
+        //Вернуть фактическое количество элементов.
         int size();
 
-        // Вернуть true,
-        // если элементов в списке нет,
-        // иначе false.
+        // Вернуть true, если элементов в списке нет
         boolean isEmpty();
 
         // Удалить все элементы из списка.
         void clear();
 
-        // Создать новый массив
-        // из строк в списке
-        // и вернуть его.
-        Integer[] toArray();
+        //пузырьковый поиск
+        Integer[] bubbleSort(Integer[] array);
 
-        Integer[] randomNumberOfArray();
-
-       Integer[]  bubbleSort(Integer[] array);
-
+        //    сортрировка выбором
         Integer[] sortSelection(Integer[] arrayIntegerList);
 
+        // сортировка вставкой
         Integer[] sortInsertion(Integer[] arrayIntegerList);
 
-        Integer compareSort();
-        boolean binarySearch(Integer item);
-
-
+        // Проверка на существование элемента, true/false;
+        boolean contains(Integer item);
 }
