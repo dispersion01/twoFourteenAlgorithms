@@ -29,6 +29,7 @@ public class Main {
         System.out.println(Arrays.toString(stringList.toArray()));
         stringList.clear();
         System.out.println(Arrays.toString(stringList.toArray()));
+        System.out.println("--------------------");
 
     }
 
