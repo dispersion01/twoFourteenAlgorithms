@@ -36,6 +36,7 @@ public class MainInteger {
         System.out.println("Bubble sort: " + (System.currentTimeMillis() - start));
         Integer[] arrayTwo = Arrays.copyOf(arrayMain, ARRAY_CAPACITY);
         integerList.sortSelection(arrayTwo);
+
         System.out.println("Selection sort: " + (System.currentTimeMillis() - start));
         Integer[] arrayThree = Arrays.copyOf(arrayMain, ARRAY_CAPACITY);
         integerList.sortInsertion(arrayThree);

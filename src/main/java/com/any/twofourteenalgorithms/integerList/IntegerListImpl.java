@@ -218,4 +218,19 @@ public class IntegerListImpl implements IntegerList {
         bubbleSort(arrayIntegerList);
         return binarySearch(item);
     }
+
+    private Integer[] grow() {
+        return Arrays.copyOf(arrayIntegerList, (int) (arrayIntegerList.length * 1.5));
+    }
+
+    private Integer[] resize() {
+        return Arrays.copyOf(arrayIntegerList, (arrayIntegerList.length * 2 / 3));
+    }
+    private void checkCapacity() {
+        if (size == arrayIntegerList.length) {
+            arrayIntegerList = grow();
+        } else if (size < arrayIntegerList.length *2 /3) {
+            arrayIntegerList = resize();
+        }
+    }
 }
